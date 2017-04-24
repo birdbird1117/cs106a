@@ -10,10 +10,36 @@
  * assume that it is at least as tall as it is wide.
  */
 
-import stanford.karel.*;
+import stanford.karel.*; 
 
 public class MidpointFindingKarel extends SuperKarel {
 
 	// You fill in this part
-
+	public void run() {
+		fillOneRow();
+		while(beepersPresent())
+			moveOneDirection();
+		putBeeper();
+	}
+	
+	public void fillOneRow() {
+		while(frontIsClear()) {
+			move();
+			putBeeper();
+		}
+		turnAround();
+		pickBeeper();
+		move();
+	}
+	
+	public void moveOneDirection() {
+		pickBeeper();
+		move();
+		while(beepersPresent())
+			move();
+		turnAround();
+		move();
+	}
 }
+
+
