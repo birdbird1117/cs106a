@@ -50,7 +50,6 @@ public class CheckerboardKarel extends SuperKarel {
 				move();
 				turnLeft();
 			}	
-				
 			if(leftIsBlocked()) {
 				move();
 				turnRight();
@@ -59,9 +58,14 @@ public class CheckerboardKarel extends SuperKarel {
 				move();
 		} else {
 			if(rightIsBlocked()) {
-				move();
-				turnLeft();
-			}	
+				if(leftIsBlocked()){
+					move();
+					turnRight();	
+				} else {
+					move();
+					turnLeft();
+				}		
+			}
 				
 			if(leftIsBlocked()) {
 				move();
