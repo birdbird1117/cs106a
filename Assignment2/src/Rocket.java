@@ -15,7 +15,7 @@ public class Rocket extends ConsoleProgram {
 		printBodyLine();
 		printUpperBody();
 		printLowerBody();
-		printBodyLine();
+		printBodyLine(); 
 		printHeadTail();		
 	}
 	
