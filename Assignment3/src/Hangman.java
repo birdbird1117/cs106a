@@ -21,13 +21,14 @@ public class Hangman extends HangmanProgram {
 		intro();
 	}
 	
-	// TODO: comment this method
+	// In this method, you should print the following introductory text that appears at the start of the program. 
+	// A blank line of output should appear after the text.
 	private void intro() {
 		println("CS 106A Hangman! \nI will think of a random word.\nYou'll try to guess its letters.\nEvery time you guess a letter\nthat isn't in my word, a new body \npart of the hanging man appears.\nGuess correctly to avoid the gallows! \n");
 		
 	}
 	
-	// TODO: comment this method
+
 	private int playOneGame(String secretWord) {
 		// TODO: write this method
 		return 0;
