@@ -19,6 +19,7 @@ public class Hangman extends HangmanProgram {
 	
 	public void run() {
 		intro();
+		print(createHint("STARTED", "ETOSX"));
 	}
 	
 	// In this method, you should print the following introductory text that appears at the start of the program. 
@@ -35,10 +36,20 @@ public class Hangman extends HangmanProgram {
 	}
 	
 	
-	// TODO: comment this method
+	// In this method, you should create and return a hint string. 
+	// Your method should accept two parameters: the secret word that the user is trying to guess, 
+	// and the set of letters that have already been guessed.
 	private String createHint(String secretWord, String guessedLetters) {
-		// TODO: write this method
-		return "";
+		String str = "";
+		for (int i = 0; i < secretWord.length(); i++) {
+			char chr = secretWord.charAt(i);
+			if (guessedLetters.indexOf(chr) == -1) {
+				str = str + "-";
+			} else {
+				str = str + chr; 
+			}				
+		}
+		return str;
 	}
 	
 	// TODO: comment this method
