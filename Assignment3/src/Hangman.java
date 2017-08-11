@@ -20,6 +20,7 @@ public class Hangman extends HangmanProgram {
 	public void run() {
 		intro();
 		print(createHint("STARTED", "ETOSX"));
+		print(readGuess("TOSX")); 
 	}
 	
 	// In this method, you should print the following introductory text that appears at the start of the program. 
@@ -60,7 +61,33 @@ public class Hangman extends HangmanProgram {
 	// You should re-prompt the user until they type a string that is a single letter from A-Z, case-insensitive, 
 	// that has not been guessed before.
 	private char readGuess(String guessedLetters) {
-		// TODO: write this method
+		boolean guessed = false;
+		while(!guessed) {
+			Scanner s = new Scanner(System.in);
+			print("Your guess? ");
+			String str = s.nextLine();
+			
+			if (str.length() == 1) {
+				char chr = str.charAt(0);
+				if (Character.isLetter(chr)) {
+					if ((guessedLetters.indexOf(chr) == -1) || (guessedLetters.indexOf(Character.toUpperCase(chr)) == -1)) {
+						if ((chr < 'Z') && (chr > 'A')) {
+							guessed = true;
+							return chr;
+						} else {
+							guessed = true;
+							return Character.toUpperCase(chr);
+						}
+					} else {
+						println("You already guessed that letter.");
+					}
+				} else {
+					println("Type a single letter from A-Z");
+				}
+			} else {
+				println("Type a single letter from A-Z");
+			}	
+		}
 		return '?';
 	}
 	
