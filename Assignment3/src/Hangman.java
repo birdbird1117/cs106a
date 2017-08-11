@@ -52,7 +52,13 @@ public class Hangman extends HangmanProgram {
 		return str;
 	}
 	
-	// TODO: comment this method
+	// In this method, you should prompt the user to type a single letter to guess, 
+	// and return the letter typed as an uppercase char. 
+	// Your method should accept a string as a parameter representing all 
+	// letters that have already been guessed; for example, if the user has guessed T, O, S, and X, 
+	// you will be passed "TOSX". If the user has not guessed any letters yet, the string will be empty. 
+	// You should re-prompt the user until they type a string that is a single letter from A-Z, case-insensitive, 
+	// that has not been guessed before.
 	private char readGuess(String guessedLetters) {
 		// TODO: write this method
 		return '?';
