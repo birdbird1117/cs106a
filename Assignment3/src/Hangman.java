@@ -66,8 +66,13 @@ public class Hangman extends HangmanProgram {
 			Scanner s = new Scanner(System.in);
 			print("Your guess? ");
 			String str = s.nextLine();
-			
+			println("You already guessed  ");
+			print(str);
+			println("You already guessed  2");
+
 			if (str.length() == 1) {
+				println("You already guessed  ");
+
 				char chr = str.charAt(0);
 				if (Character.isLetter(chr)) {
 					if ((guessedLetters.indexOf(chr) == -1) || (guessedLetters.indexOf(Character.toUpperCase(chr)) == -1)) {
@@ -85,6 +90,8 @@ public class Hangman extends HangmanProgram {
 					println("Type a single letter from A-Z");
 				}
 			} else {
+				println("You already guessed 3 ");
+
 				println("Type a single letter from A-Z");
 			}	
 		}
