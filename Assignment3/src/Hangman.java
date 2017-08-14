@@ -18,8 +18,8 @@ import java.util.*;  // for Scanner
 public class Hangman extends HangmanProgram {
 	
 	public void run() {
-		intro();
-		print(createHint("STARTED", "ETOSX"));
+		//intro();
+		//print(createHint("STARTED", "ETOSX"));
 		print(readGuess("TOSX")); 
 	}
 	
@@ -63,9 +63,9 @@ public class Hangman extends HangmanProgram {
 	private char readGuess(String guessedLetters) {
 		boolean guessed = false;
 		while(!guessed) {
-			Scanner s = new Scanner(System.in);
-			print("Your guess? ");
-			String str = s.nextLine();
+			//Scanner s = new Scanner(System.in);
+			//print("Your guess? ");
+			String str = readLine("Your guess? ");
 			println("You already guessed  ");
 			print(str);
 			println("You already guessed  2");
