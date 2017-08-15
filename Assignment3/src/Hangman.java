@@ -63,25 +63,15 @@ public class Hangman extends HangmanProgram {
 	private char readGuess(String guessedLetters) {
 		boolean guessed = false;
 		while(!guessed) {
-			//Scanner s = new Scanner(System.in);
-			//print("Your guess? ");
 			String str = readLine("Your guess? ");
-			println("You already guessed  ");
-			print(str);
-			println("You already guessed  2");
-
 			if (str.length() == 1) {
-				println("You already guessed  ");
-
-				char chr = str.charAt(0);
+				char chr = str.charAt(0);			
 				if (Character.isLetter(chr)) {
-					if ((guessedLetters.indexOf(chr) == -1) || (guessedLetters.indexOf(Character.toUpperCase(chr)) == -1)) {
+					chr = Character.toUpperCase(chr);
+					if (guessedLetters.indexOf(chr) == -1) {
 						if ((chr < 'Z') && (chr > 'A')) {
 							guessed = true;
 							return chr;
-						} else {
-							guessed = true;
-							return Character.toUpperCase(chr);
 						}
 					} else {
 						println("You already guessed that letter.");
@@ -90,10 +80,8 @@ public class Hangman extends HangmanProgram {
 					println("Type a single letter from A-Z");
 				}
 			} else {
-				println("You already guessed 3 ");
-
 				println("Type a single letter from A-Z");
-			}	
+			}				
 		}
 		return '?';
 	}
