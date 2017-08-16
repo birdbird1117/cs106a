@@ -20,7 +20,8 @@ public class Hangman extends HangmanProgram {
 	public void run() {
 		//intro();
 		//print(createHint("STARTED", "ETOSX"));
-		print(readGuess("TOSX")); 
+		//print(readGuess("TOSX"));
+		playOneGame("PROGRAMMER");
 	}
 	
 	// In this method, you should print the following introductory text that appears at the start of the program. 
@@ -32,7 +33,7 @@ public class Hangman extends HangmanProgram {
 	
 
 	private int playOneGame(String secretWord) {
-		// TODO: write this method
+		print(createHint(secretWord, "G"));
 		return 0;
 	}
 	
