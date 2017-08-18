@@ -33,18 +33,28 @@ public class Hangman extends HangmanProgram {
 	
 
 	private int playOneGame(String secretWord) {
-		//print(createHint(secretWord, "G"));
 		String yourGuess = "";
 		String str = secretWord;
-		//char chr;
 		boolean notAllLetters = true;
+		int guessesLeft = secretWord.length();
+
 		while(notAllLetters) {
 			println("Secret word : " + createHint(secretWord, yourGuess));
 			println("Your guesses: " + yourGuess);
+			println("Guesses left: " + guessesLeft);
 			char chr = readGuess(yourGuess);
 			yourGuess = yourGuess + chr;
-			notAllLetters = !str.equals(secretWord);
+			notAllLetters = !str.equals(createHint(secretWord, yourGuess));
+			if (secretWord.indexOf(chr) != -1) {
+				println("Correct!");
+			} else {
+				println("Incorrect.");
+				guessesLeft--;
+			}
+			println();
 		}
+		println("You win! My word was \"PROGRAMMER\".");
+
 		return 0;
 	}
 	
@@ -81,7 +91,7 @@ public class Hangman extends HangmanProgram {
 				if (Character.isLetter(chr)) {
 					chr = Character.toUpperCase(chr);
 					if (guessedLetters.indexOf(chr) == -1) {
-						if ((chr < 'Z') && (chr > 'A')) {
+						if ((chr <= 'Z') && (chr >= 'A')) {
 							guessed = true;
 							return chr;
 						}
