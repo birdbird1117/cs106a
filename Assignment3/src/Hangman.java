@@ -39,9 +39,10 @@ public class Hangman extends HangmanProgram {
 		//char chr;
 		boolean notAllLetters = true;
 		while(notAllLetters) {
-			char chr = readGuess(str);
+			println("Secret word : " + createHint(secretWord, yourGuess));
+			println("Your guesses: " + yourGuess);
+			char chr = readGuess(yourGuess);
 			yourGuess = yourGuess + chr;
-			str = createHint(str, secretWord);
 			notAllLetters = !str.equals(secretWord);
 		}
 		return 0;
