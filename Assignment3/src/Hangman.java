@@ -33,7 +33,17 @@ public class Hangman extends HangmanProgram {
 	
 
 	private int playOneGame(String secretWord) {
-		print(createHint(secretWord, "G"));
+		//print(createHint(secretWord, "G"));
+		String yourGuess = "";
+		String str = secretWord;
+		//char chr;
+		boolean notAllLetters = true;
+		while(notAllLetters) {
+			char chr = readGuess(str);
+			yourGuess = yourGuess + chr;
+			str = createHint(str, secretWord);
+			notAllLetters = !str.equals(secretWord);
+		}
 		return 0;
 	}
 	
