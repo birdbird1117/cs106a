@@ -21,7 +21,8 @@ public class Hangman extends HangmanProgram {
 		//intro();
 		//print(createHint("STARTED", "ETOSX"));
 		//print(readGuess("TOSX"));
-		playOneGame("PROGRAMMER");
+		//playOneGame("PROGRAMMER");
+		displayHangman(0);
 	}
 	
 	// In this method, you should print the following introductory text that appears at the start of the program. 
@@ -36,7 +37,7 @@ public class Hangman extends HangmanProgram {
 		String yourGuess = "";
 		String str = secretWord;
 		boolean notAllLetters = true;
-		int guessesLeft = secretWord.length();
+		int guessesLeft = 8;
 
 		while(notAllLetters) {
 			println("Secret word : " + createHint(secretWord, yourGuess));
@@ -108,9 +109,40 @@ public class Hangman extends HangmanProgram {
 		return '?';
 	}
 	
-	// TODO: comment this method
+	// In this method you should print a drawing of the current Hangman state for the game based 
+	// on the given number of guesses remaining. This amounts to reading and printing the contents 
+	// of the file whose name corresponds to that number of guesses. For example, 
+	// if the guess count is 3, your code should read and print the entire contents of the file res/display3.txt to the console. 
+	// You may assume that the guess count is a legal value from 0-8 and that the given file exists in the res folder and can be read successfully.
 	private void displayHangman(int guessCount) {
-		// TODO: write this method
+		String fileName = null;	
+		switch(guessCount) {
+		case 8: fileName = "../res/display8.txt";
+		break;				
+		case 7: fileName = "../res/display7.txt";
+		break;				
+		case 6: fileName = "../res/display6.txt";
+		break;				
+		case 5: fileName = "../res/display5.txt";
+		break;				
+		case 4: fileName = "../res/display4.txt";
+		break;				
+		case 3: fileName = "../res/display3.txt";
+		break;				
+		case 2: fileName = "../res/display2.txt";
+		break;				
+		case 1: fileName = "../res/display1.txt";
+		break;			
+		case 0: fileName = "../res/display0.txt";
+		break;			
+		}
+		canvas.clear();
+		Scanner input = new Scanner(new File(fileName));
+		while(input.hasNextLine()){
+			String line = input.nextLine();
+			canvas.println(line);
+		}
+		input.close();		
 	}
 	
 	// TODO: comment this method
