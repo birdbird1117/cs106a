@@ -137,7 +137,13 @@ public class Hangman extends HangmanProgram {
 		break;			
 		}
 		canvas.clear();
-		Scanner input = new Scanner(new File(fileName));
+		Scanner input = null;
+		try {
+			input = new Scanner(new File(fileName));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		while(input.hasNextLine()){
 			String line = input.nextLine();
 			canvas.println(line);
