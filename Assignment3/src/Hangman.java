@@ -22,7 +22,10 @@ public class Hangman extends HangmanProgram {
 		//print(createHint("STARTED", "ETOSX"));
 		//print(readGuess("TOSX"));
 		//playOneGame("PROGRAMMER");
-		displayHangman(0);
+		//displayHangman(0);
+		String filename = promptUserForFile("prompt","../res/");
+		print(getRandomWord(filename));
+		
 	}
 	
 	// In this method, you should print the following introductory text that appears at the start of the program. 
@@ -158,7 +161,21 @@ public class Hangman extends HangmanProgram {
 	
 	// TODO: comment this method
 	private String getRandomWord(String filename) {
-		// TODO: write this method
-		return "";
+		Scanner input = null;
+		try {
+			input = new Scanner(new File(filename));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int lineNum = input.nextInt();
+		int rand = (int)(Math.random() * lineNum + 1);
+		String str = null;
+
+		for(int i = 0; i < rand; i++) {
+			str = input.next();
+		}
+	
+		return str;
 	}
 }
