@@ -24,9 +24,11 @@ public class Hangman extends HangmanProgram {
 		//playOneGame("PROGRAMMER");
 		//displayHangman(0);
 		String filename = "../res/oneword.txt";//promptUserForFile("Type a filename","../res/");
-		while (readBoolean("prompt text", "Y", "N")) {
-			playOneGame(getRandomWord(filename));
-		}
+		//playOneGame(getRandomWord(filename));
+//		while (readBoolean("prompt text", "Y", "N")) {
+//			playOneGame(getRandomWord(filename));
+//		}
+		stats(4, 2, 5);
 	}
 	
 	// In this method, you should print the following introductory text that appears at the start of the program. 
@@ -168,7 +170,12 @@ public class Hangman extends HangmanProgram {
 	// of your program so that you can pass proper values to stats later.) 
 	// Your code should work for any number of games ≥ 1.
 	private void stats(int gamesCount, int gamesWon, int best) {
-		// TODO: write this method
+		println("Overall statistics:");
+		println("Games played: "+gamesCount);
+		println("Games won:"+ gamesWon);
+		println("Win percent: "+String.format("%.1f%%",(float)gamesWon*100/(float)gamesCount));
+		println("Best game:"+best+" guess(es) remaining");
+		println("Thanks for playing");
 	}
 	
 	// In this method you should read the file with the given name, and randomly choose and return a word from it. 
