@@ -23,9 +23,10 @@ public class Hangman extends HangmanProgram {
 		//print(readGuess("TOSX"));
 		//playOneGame("PROGRAMMER");
 		//displayHangman(0);
-		String filename = promptUserForFile("prompt","../res/");
-		print(getRandomWord(filename));
-		
+		String filename = "../res/oneword.txt";//promptUserForFile("Type a filename","../res/");
+		while (readBoolean("prompt text", "Y", "N")) {
+			playOneGame(getRandomWord(filename));
+		}
 	}
 	
 	// In this method, you should print the following introductory text that appears at the start of the program. 
@@ -42,7 +43,7 @@ public class Hangman extends HangmanProgram {
 		boolean notAllLetters = true;
 		int guessesLeft = 8;
 
-		while(notAllLetters) {
+		while(notAllLetters && (guessesLeft > 0)) {
 			println("Secret word : " + createHint(secretWord, yourGuess));
 			println("Your guesses: " + yourGuess);
 			println("Guesses left: " + guessesLeft);
@@ -55,10 +56,14 @@ public class Hangman extends HangmanProgram {
 				println("Incorrect.");
 				guessesLeft--;
 			}
+			displayHangman(guessesLeft);
 			println();
 		}
-		println("You win! My word was \"PROGRAMMER\".");
-
+		if (guessesLeft == 0) {
+			println("You lose! My word was "+secretWord+".");
+		} else {
+			println("You win! My word was "+secretWord+".");
+		}
 		return 0;
 	}
 	
@@ -154,12 +159,21 @@ public class Hangman extends HangmanProgram {
 		input.close();		
 	}
 	
-	// TODO: comment this method
+	// In this method, you should print the final statistics that display after 
+	// all games of Hangman have been played. You should print the total games played, 
+	// number of games won, percentage of games won, and the game that required the fewest guesses to complete. 
+	// (Of course, all of this information is passed to your method, 
+	// so this method is fairly straightforward to write. 
+	// The hard part is to keep track of the above statistics in other parts 
+	// of your program so that you can pass proper values to stats later.) 
+	// Your code should work for any number of games ≥ 1.
 	private void stats(int gamesCount, int gamesWon, int best) {
 		// TODO: write this method
 	}
 	
-	// TODO: comment this method
+	// In this method you should read the file with the given name, and randomly choose and return a word from it. 
+	// For example, if the filename passed is "dict.txt", a provided dictionary file that contains 73 words, 
+	// you should randomly choose one of those words and return it; each word should have equal probability of being chosen, (1/73 in this case).
 	private String getRandomWord(String filename) {
 		Scanner input = null;
 		try {
