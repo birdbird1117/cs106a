@@ -18,17 +18,24 @@ import java.util.*;  // for Scanner
 public class Hangman extends HangmanProgram {
 	
 	public void run() {
-		//intro();
-		//print(createHint("STARTED", "ETOSX"));
-		//print(readGuess("TOSX"));
-		//playOneGame("PROGRAMMER");
-		//displayHangman(0);
-		String filename = "../res/oneword.txt";//promptUserForFile("Type a filename","../res/");
-		//playOneGame(getRandomWord(filename));
-//		while (readBoolean("prompt text", "Y", "N")) {
-//			playOneGame(getRandomWord(filename));
-//		}
-		stats(4, 2, 5);
+		int gamesCount = 0;
+		int gamesWon = 0;
+		int best = 8;
+		String filename = "../res/oneword.txt";
+		//String filename = promptUserForFile("Type a filename","../res/");
+		boolean continuePlay = true;
+		while (continuePlay) {
+			int guessesLeft = playOneGame(getRandomWord(filename));
+			gamesCount++;
+			if (guessesLeft != 0) {
+				gamesWon++;
+				if(best < guessesLeft) {
+					best = guessesLeft;
+				}
+			}
+			continuePlay = readBoolean("prompt text", "Y", "N");
+		}
+		stats(gamesCount, gamesWon, best);
 	}
 	
 	// In this method, you should print the following introductory text that appears at the start of the program. 
@@ -44,6 +51,7 @@ public class Hangman extends HangmanProgram {
 		String str = secretWord;
 		boolean notAllLetters = true;
 		int guessesLeft = 8;
+		displayHangman(guessesLeft);
 
 		while(notAllLetters && (guessesLeft > 0)) {
 			println("Secret word : " + createHint(secretWord, yourGuess));
@@ -66,7 +74,8 @@ public class Hangman extends HangmanProgram {
 		} else {
 			println("You win! My word was "+secretWord+".");
 		}
-		return 0;
+		canvas.clear();
+		return guessesLeft;
 	}
 	
 	
