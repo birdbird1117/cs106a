@@ -53,6 +53,27 @@ public class Breakout extends BreakoutProgram {
 			InitYLocation = InitYLocation + BRICK_HEIGHT + BRICK_SEP;
 		}
 	}
+
+	private GRect paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
+
+
+	public void setPaddle() {
+	    paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
+		paddle.setFilled(true);
+		paddle.setColor(Color.BLACK);
+		add(paddle);
+	}
+
+	public void mouseMoved(MouseEvent event) {
+		double mouseX = event.getX();
+		double mouseY = event.getY();
+
+		double paddleX = mouseX - paddle.getWidth() / 2.0;
+		double paddleY = paddle.getY();
+		if ((paddleX >= 0) && (paddleX <= CANVAS_WIDTH - PADDLE_WIDTH)) {
+			paddle.setLocation(paddleX, paddleY);
+		}
+	}
 	
 	
 	public void run() {
@@ -66,5 +87,6 @@ public class Breakout extends BreakoutProgram {
 		// TODO: finish this program
 		//setOneBrickLine(1, 20);
 		setBricks();
+		setPaddle();
 	}
 }
