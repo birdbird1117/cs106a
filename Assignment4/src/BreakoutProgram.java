@@ -78,7 +78,7 @@ public abstract class BreakoutProgram extends acm.program.GraphicsProgram {
 	 * Dimensions of the paddle
 	 */
 	public static final double PADDLE_WIDTH = 60;
-	public static final double PADDLE_HEIGHT = 30;
+	public static final double PADDLE_HEIGHT = 10;
 
 	/** Offset of the paddle up from the bottom */
 	public static final double PADDLE_Y_OFFSET = 30;

@@ -85,12 +85,15 @@ public class Breakout extends BreakoutProgram {
 		ball.setColor(Color.BLACK);
 		add(ball);
 
+		numberOfBricks = 0;
+		updateLabel();
+
 		Random random = new Random();
 		vy = VELOCITY_Y;
 		vx = VELOCITY_X_MIN + Math.random()*(VELOCITY_X_MAX - VELOCITY_X_MIN);
 		vx = vx * (random.nextBoolean() ? 1 : -1);
-		while (true) {
-						hasHitTopOrBottomEdge();
+		while (!hasHitBottomEdge() && !userWin()) {
+			hasHitTopEdge();
 			hasHitLeftOrRightEdge();
 			checkCollision();
 
@@ -99,16 +102,29 @@ public class Breakout extends BreakoutProgram {
 		}
 	}
 
-	private boolean hasHitTopOrBottomEdge() {
+	private boolean hasHitTopEdge() {
 		double ballY = ball.getY();
-		if ((ballY <= 0) || (ballY + 2*BALL_RADIUS >= CANVAS_HEIGHT)) {
+		if (ballY <= 0) {
 			vy = -vy;
 			return true;
 		} else {
 			return false;
 		}
 	}
-
+	
+	private boolean hasHitBottomEdge() {
+		double ballY = ball.getY();
+		if (ballY + 2*BALL_RADIUS >= CANVAS_HEIGHT) {
+			numberOfTurns --;
+			remove(ball);
+			remove(paddle);
+			updateLabel();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	private boolean hasHitLeftOrRightEdge() {
 		double ballX = ball.getX();
 		if ((ballX <= 0) || (ballX + 2*BALL_RADIUS >= CANVAS_WIDTH)) {
@@ -126,11 +142,16 @@ public class Breakout extends BreakoutProgram {
 
 	private void classifyCollider(GObject collider) {
 		if (collider == paddle) {
-			vy = -vy;
+			if (vy == VELOCITY_Y) {
+				// important, so the ball does not glue to paddle
+				vy = -vy;
+			}
 		} else {
 			remove(collider);
+			numberOfBricks++;
+			updateLabel();
 			vy = -vy;
-		}
+		} 
 	}
 
 	private void checkCollision() {
@@ -142,26 +163,47 @@ public class Breakout extends BreakoutProgram {
 
 		if (getCollidingObject(x, y) != null) {
 			collider = getCollidingObject(x,y);
-			println("1111");
 			classifyCollider(collider);
 		} else if (getCollidingObject(x+2*BALL_RADIUS, y) != null) {
 			collider = getCollidingObject(x+2*BALL_RADIUS, y);
-			println("2222");
-
 			classifyCollider(collider);
 		} else if (getCollidingObject(x, y+2*BALL_RADIUS) != null) {
 			collider = getCollidingObject(x, y+2*BALL_RADIUS);
-						println("3333");
-
 			classifyCollider(collider);
 		} else if (getCollidingObject(x+2*BALL_RADIUS, y+2*BALL_RADIUS) != null) {
 			collider = getCollidingObject(x+2*BALL_RADIUS, y+2*BALL_RADIUS);
-						println("444");
-
-			classifyCollider(collider);
+			classifyCollider(collider);			
 		}
 	}
 
+	private boolean userWin() {
+		return numberOfBricks == NBRICK_ROWS*NBRICK_COLUMNS;
+	}
+
+	private int numberOfTurns = NTURNS;
+	private int numberOfBricks = 0;
+	private GLabel label;
+
+	private void updateLabel() {
+		if (label != null) {
+			remove(label);
+		}
+		label = new GLabel("Score: " + numberOfBricks + ", Turns:" + numberOfTurns, 0, 30);
+		label.setFont(SCREEN_FONT);
+		add(label);
+	}
+	
+	private void gameInfo() {
+		if (userWin()) {
+			label = new GLabel("YOU WIN!", CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+			label.setFont(SCREEN_FONT);
+			add(label);
+		} else {
+			label = new GLabel("GAME OVER", CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+			label.setFont(SCREEN_FONT);
+			add(label);
+		}
+	}
 	public void run() {
 		// Set the window's title bar text
 		setTitle("CS 106A Breakout");
@@ -169,11 +211,32 @@ public class Breakout extends BreakoutProgram {
 		// Set the canvas size.  In your code, remember to ALWAYS use getWidth()
 		// and getHeight() to get the screen dimensions, not these constants!
 		setCanvasSize(CANVAS_WIDTH, CANVAS_HEIGHT);
+
 		
 		// TODO: finish this program
 		//setOneBrickLine(1, 20);
-		setBricks();
-		setPaddle();
-		setBall();
+		updateLabel();
+		
+		while (numberOfTurns > 0) {
+			removeAll();
+			setBricks();
+			setPaddle();
+			setBall();
+			if(userWin())
+				break;
+		}
+
+		if(userWin()) {
+			removeAll();
+			updateLabel();
+			gameInfo();
+		} else {
+			remove(ball);
+			remove(paddle);
+			updateLabel();
+			gameInfo();
+		}
+		
+		
 	}
 }
