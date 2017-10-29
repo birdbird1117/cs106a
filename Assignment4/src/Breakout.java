@@ -9,7 +9,7 @@ import java.awt.event.*;   // MouseEvent
 
 public class Breakout extends BreakoutProgram {
 
-	public void setBricksColor(int RowNumber, GRect rect) {
+	private void setBricksColor(int RowNumber, GRect rect) {
 		switch (RowNumber % 10) {
 			case 0: ;
 			case 1: rect.setColor(Color.RED); break;
@@ -25,7 +25,7 @@ public class Breakout extends BreakoutProgram {
 		}
 	}
 
-	public void setOneBrickLine(int RowNumber, double InitYLocation) {
+	private void setOneBrickLine(int RowNumber, double InitYLocation) {
 		double InitXLocationLeft;
 		double InitXLocationRight;
 		
@@ -47,7 +47,7 @@ public class Breakout extends BreakoutProgram {
 		}
 	}
 	
-	public void setBricks() {
+	private void setBricks() {
 		double InitYLocation = BRICK_Y_OFFSET;
 		for (int i = 0; i < NBRICK_ROWS; i++) {
 			setOneBrickLine(i, InitYLocation);
@@ -57,7 +57,7 @@ public class Breakout extends BreakoutProgram {
 
 	private GRect paddle;
 
-	public void setPaddle() {
+	private void setPaddle() {
 	    paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
 		paddle.setFilled(true);
 		paddle.setColor(Color.BLACK);
@@ -79,7 +79,7 @@ public class Breakout extends BreakoutProgram {
 	private double vx;
 	private double vy;
 
-	public void setBall() {
+	private void setBall() {
 		ball = new GOval(CANVAS_WIDTH/2 - BALL_RADIUS, CANVAS_HEIGHT/2 - BALL_RADIUS, BALL_RADIUS, BALL_RADIUS);
 		ball.setFilled(true);
 		ball.setColor(Color.BLACK);
@@ -90,14 +90,16 @@ public class Breakout extends BreakoutProgram {
 		vx = VELOCITY_X_MIN + Math.random()*(VELOCITY_X_MAX - VELOCITY_X_MIN);
 		vx = vx * (random.nextBoolean() ? 1 : -1);
 		while (true) {
-			hasHitTopOrBottomEdge();
+						hasHitTopOrBottomEdge();
 			hasHitLeftOrRightEdge();
+			checkCollision();
+
 			ball.move(vx, vy);
 			pause(DELAY);
 		}
 	}
 
-	public boolean hasHitTopOrBottomEdge() {
+	private boolean hasHitTopOrBottomEdge() {
 		double ballY = ball.getY();
 		if ((ballY <= 0) || (ballY + 2*BALL_RADIUS >= CANVAS_HEIGHT)) {
 			vy = -vy;
@@ -107,7 +109,7 @@ public class Breakout extends BreakoutProgram {
 		}
 	}
 
-	public boolean hasHitLeftOrRightEdge() {
+	private boolean hasHitLeftOrRightEdge() {
 		double ballX = ball.getX();
 		if ((ballX <= 0) || (ballX + 2*BALL_RADIUS >= CANVAS_WIDTH)) {
 			vx = -vx;
@@ -117,6 +119,49 @@ public class Breakout extends BreakoutProgram {
 		}
 	}	
 	
+	private GObject getCollidingObject(double x, double y) {
+		GObject object = getElementAt(x, y);
+		return object;
+	}
+
+	private void classifyCollider(GObject collider) {
+		if (collider == paddle) {
+			vy = -vy;
+		} else {
+			remove(collider);
+			vy = -vy;
+		}
+	}
+
+	private void checkCollision() {
+		double x;
+		double y;
+		x = ball.getX();
+		y = ball.getY();
+		GObject collider;
+
+		if (getCollidingObject(x, y) != null) {
+			collider = getCollidingObject(x,y);
+			println("1111");
+			classifyCollider(collider);
+		} else if (getCollidingObject(x+2*BALL_RADIUS, y) != null) {
+			collider = getCollidingObject(x+2*BALL_RADIUS, y);
+			println("2222");
+
+			classifyCollider(collider);
+		} else if (getCollidingObject(x, y+2*BALL_RADIUS) != null) {
+			collider = getCollidingObject(x, y+2*BALL_RADIUS);
+						println("3333");
+
+			classifyCollider(collider);
+		} else if (getCollidingObject(x+2*BALL_RADIUS, y+2*BALL_RADIUS) != null) {
+			collider = getCollidingObject(x+2*BALL_RADIUS, y+2*BALL_RADIUS);
+						println("444");
+
+			classifyCollider(collider);
+		}
+	}
+
 	public void run() {
 		// Set the window's title bar text
 		setTitle("CS 106A Breakout");
