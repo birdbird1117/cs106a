@@ -4,6 +4,7 @@ import acm.graphics.*;     // GOval, GRect, etc.
 import acm.program.*;      // GraphicsProgram
 import acm.util.*;         // RandomGenerator
 import java.awt.*;         // Color
+import java.util.*;        // random
 import java.awt.event.*;   // MouseEvent
 
 public class Breakout extends BreakoutProgram {
@@ -54,8 +55,7 @@ public class Breakout extends BreakoutProgram {
 		}
 	}
 
-	private GRect paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
-
+	private GRect paddle;
 
 	public void setPaddle() {
 	    paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
@@ -75,6 +75,47 @@ public class Breakout extends BreakoutProgram {
 		}
 	}
 	
+	private GOval ball;
+	private double vx;
+	private double vy;
+
+	public void setBall() {
+		ball = new GOval(CANVAS_WIDTH/2 - BALL_RADIUS, CANVAS_HEIGHT/2 - BALL_RADIUS, BALL_RADIUS, BALL_RADIUS);
+		ball.setFilled(true);
+		ball.setColor(Color.BLACK);
+		add(ball);
+
+		Random random = new Random();
+		vy = VELOCITY_Y;
+		vx = VELOCITY_X_MIN + Math.random()*(VELOCITY_X_MAX - VELOCITY_X_MIN);
+		vx = vx * (random.nextBoolean() ? 1 : -1);
+		while (true) {
+			hasHitTopOrBottomEdge();
+			hasHitLeftOrRightEdge();
+			ball.move(vx, vy);
+			pause(DELAY);
+		}
+	}
+
+	public boolean hasHitTopOrBottomEdge() {
+		double ballY = ball.getY();
+		if ((ballY <= 0) || (ballY + 2*BALL_RADIUS >= CANVAS_HEIGHT)) {
+			vy = -vy;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean hasHitLeftOrRightEdge() {
+		double ballX = ball.getX();
+		if ((ballX <= 0) || (ballX + 2*BALL_RADIUS >= CANVAS_WIDTH)) {
+			vx = -vx;
+			return true;
+		} else {
+			return false;
+		}
+	}	
 	
 	public void run() {
 		// Set the window's title bar text
@@ -88,5 +129,6 @@ public class Breakout extends BreakoutProgram {
 		//setOneBrickLine(1, 20);
 		setBricks();
 		setPaddle();
+		setBall();
 	}
 }
