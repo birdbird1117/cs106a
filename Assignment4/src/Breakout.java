@@ -55,10 +55,10 @@ public class Breakout extends BreakoutProgram {
 		}
 	}
 
-	private GRect paddle;
+	private GRect paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
 
 	private void setPaddle() {
-	    paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
+	    //paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
 		paddle.setFilled(true);
 		paddle.setColor(Color.BLACK);
 		add(paddle);
@@ -80,7 +80,7 @@ public class Breakout extends BreakoutProgram {
 	private double vy;
 
 	private void setBall() {
-		ball = new GOval(CANVAS_WIDTH/2 - BALL_RADIUS, CANVAS_HEIGHT/2 - BALL_RADIUS, BALL_RADIUS, BALL_RADIUS);
+		ball = new GOval(CANVAS_WIDTH/2 - BALL_RADIUS, CANVAS_HEIGHT/2 - BALL_RADIUS, 2*BALL_RADIUS, 2*BALL_RADIUS);
 		ball.setFilled(true);
 		ball.setColor(Color.BLACK);
 		add(ball);
