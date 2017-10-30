@@ -35,12 +35,10 @@ public class Breakout extends BreakoutProgram {
 			for (int i = 0; i < NBRICK_COLUMNS/2; i++) {
 				GRect rect= new GRect(InitXLocationLeft-(BRICK_SEP+BRICK_WIDTH)*i, InitYLocation, BRICK_WIDTH, BRICK_HEIGHT);
 				rect.setFilled(true);
-//				rect.setColor(Color.RED);
 				setBricksColor(RowNumber, rect);
 				add(rect);
 				rect= new GRect(InitXLocationRight+(BRICK_SEP+BRICK_WIDTH)*i, InitYLocation, BRICK_WIDTH, BRICK_HEIGHT);
 				rect.setFilled(true);
-//				rect.setColor(Color.RED);
 				setBricksColor(RowNumber, rect);
 				add(rect);
 			}
@@ -58,7 +56,6 @@ public class Breakout extends BreakoutProgram {
 	private GRect paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
 
 	private void setPaddle() {
-	    //paddle = new GRect(CANVAS_WIDTH/2 - PADDLE_WIDTH/2, CANVAS_HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT);
 		paddle.setFilled(true);
 		paddle.setColor(Color.BLACK);
 		add(paddle);
@@ -146,7 +143,7 @@ public class Breakout extends BreakoutProgram {
 				// important, so the ball does not glue to paddle
 				vy = -vy;
 			}
-		} else {
+		} else if (collider.getY() != LABELY) {
 			remove(collider);
 			numberOfBricks++;
 			updateLabel();
@@ -183,12 +180,13 @@ public class Breakout extends BreakoutProgram {
 	private int numberOfTurns = NTURNS;
 	private int numberOfBricks = 0;
 	private GLabel label;
+	public static final double LABELY = 30;
 
 	private void updateLabel() {
 		if (label != null) {
 			remove(label);
 		}
-		label = new GLabel("Score: " + numberOfBricks + ", Turns:" + numberOfTurns, 0, 30);
+		label = new GLabel("Score: " + numberOfBricks + ", Turns:" + numberOfTurns, 0, LABELY);
 		label.setFont(SCREEN_FONT);
 		add(label);
 	}
@@ -204,6 +202,7 @@ public class Breakout extends BreakoutProgram {
 			add(label);
 		}
 	}
+	
 	public void run() {
 		// Set the window's title bar text
 		setTitle("CS 106A Breakout");
@@ -212,9 +211,6 @@ public class Breakout extends BreakoutProgram {
 		// and getHeight() to get the screen dimensions, not these constants!
 		setCanvasSize(CANVAS_WIDTH, CANVAS_HEIGHT);
 
-		
-		// TODO: finish this program
-		//setOneBrickLine(1, 20);
 		updateLabel();
 		
 		while (numberOfTurns > 0) {
