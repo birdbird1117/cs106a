@@ -20,8 +20,19 @@ public class ImageShopAlgorithms implements ImageShopAlgorithmsInterface {
 	}
 
 	public GImage rotateLeft(GImage source) {
-		// TODO
-		return null;
+		int[][] pixels = source.getPixelArray();
+		int rows = pixels.length;
+		int cols = pixels[0].length;
+		int[][] pixelsRotateLeft = new int[cols][rows];
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols ; j++ ) {				
+				pixelsRotateLeft[cols-j-1][i] = pixels[i][j];
+			}
+		}
+		
+		GImage image = new GImage(pixelsRotateLeft);
+		return image;
 	}
 
 	public GImage rotateRight(GImage source) {
