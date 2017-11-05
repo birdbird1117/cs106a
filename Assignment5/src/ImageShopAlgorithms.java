@@ -30,8 +30,25 @@ public class ImageShopAlgorithms implements ImageShopAlgorithmsInterface {
 	}
 
 	public GImage greenScreen(GImage source) {
-		// TODO
-		return null;
+		int[][] pixels = source.getPixelArray();
+		int rows = pixels.length;
+		int cols = pixels[0].length;
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols ; j++ ) {				
+				int px = pixels[i][j];
+				int red = GImage.getRed(px);
+				int green = GImage.getGreen(px);
+				int blue = GImage.getBlue(px);
+				if (green >= 2*Math.max(red, blue)) {				
+					pixels[i][j] = GImage.createRGBPixel(1, 1, 1, 0);
+				} else {
+					pixels[i][j] = GImage.createRGBPixel(red, green, blue);
+				}
+			}
+		}
+		GImage image = new GImage(pixels);
+		return image;
 	}
 
 	public GImage equalize(GImage source) {
