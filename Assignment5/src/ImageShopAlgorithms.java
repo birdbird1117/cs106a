@@ -40,8 +40,21 @@ public class ImageShopAlgorithms implements ImageShopAlgorithmsInterface {
 	}
 
 	public GImage negative(GImage source) {
-		// TODO
-		return null;
+		int[][] pixels = source.getPixelArray();
+		int rows = pixels.length;
+		int cols = pixels[0].length;
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols ; j++ ) {				
+				int px = pixels[i][j];
+				int red = 255 - GImage.getRed(px);
+				int green = 255 - GImage.getGreen(px);
+				int blue = 255 - GImage.getBlue(px);
+				pixels[i][j] = GImage.createRGBPixel(red, green, blue);
+			}
+		}
+		GImage image = new GImage(pixels);
+		return image;
 	}
 
 	public GImage translate(GImage source, int dx, int dy) {
