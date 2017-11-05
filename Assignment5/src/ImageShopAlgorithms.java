@@ -108,8 +108,19 @@ public class ImageShopAlgorithms implements ImageShopAlgorithmsInterface {
 	}
 
 	public GImage translate(GImage source, int dx, int dy) {
-		// TODO
-		return null;
+		int[][] pixels = source.getPixelArray();
+		int rows = pixels.length;
+		int cols = pixels[0].length;
+		int[][] pixelsRotateLeft = new int[cols][rows];
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols ; j++ ) {				
+				pixelsRotateLeft[((i+dy)%rows+rows)%rows][((j+dx)%cols+cols)%cols] = pixels[i][j];
+			}
+		}
+		
+		GImage image = new GImage(pixelsRotateLeft);
+		return image;		
 	}
 
 	public GImage blur(GImage source) {
