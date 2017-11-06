@@ -139,16 +139,6 @@ public class ImageShopAlgorithms implements ImageShopAlgorithmsInterface {
 		return 	GImage.createRGBPixel(red, green, blue);
 	}
 
-
-///// private void printScores(Player... players) {
-//     for (int i = 0; i < players.length; ++i) {
-//         Player player = players[i];
-//         String name   = player.getName();
-//         int    score  = player.getScore();
-//         // Print name and score followed by a newline
-//         System.out.format("%s: %d%n", name, score);
-//     }
-// }
 	public GImage blur(GImage source) {
 		int[][] pixels = source.getPixelArray();
 		int rows = pixels.length;
