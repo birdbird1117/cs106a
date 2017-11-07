@@ -85,8 +85,44 @@ public class ImageShopAlgorithms implements ImageShopAlgorithmsInterface {
 	}
 
 	public GImage equalize(GImage source) {
-		// TODO
-		return null;
+		int[][] pixels = source.getPixelArray();
+		int rows = pixels.length;
+		int cols = pixels[0].length;
+
+		int[][] pixelsEqualized = new int[rows][cols];
+
+		int[] luminosity = new int[256]; 
+		int[] cumulativeLuminosity = new int[256]; 
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols ; j++ ) {				
+				int px = pixels[i][j];
+				int red = GImage.getRed(px);
+				int green = GImage.getGreen(px);
+				int blue = GImage.getBlue(px);
+				luminosity[computeLuminosity(red, green, blue)]++;
+			}
+		}
+
+		for (int i = 0; i < 256; i++) {
+			for (int j = 0; j <= i; j++) {
+				cumulativeLuminosity[i] += luminosity[j]; 
+			}
+		}
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols ; j++ ) {	
+				int px = pixels[i][j];
+				int red = GImage.getRed(px);
+				int green = GImage.getGreen(px);
+				int blue = GImage.getBlue(px);			
+				int newColorValue = (255*(cumulativeLuminosity[computeLuminosity(red, green, blue)])/(rows*cols));
+				pixelsEqualized[i][j] = GImage.createRGBPixel(newColorValue, newColorValue, newColorValue);
+			}
+		}		
+
+		GImage image = new GImage(pixelsEqualized);
+		return image;
 	}
 
 	public GImage negative(GImage source) {
@@ -168,7 +204,6 @@ public class ImageShopAlgorithms implements ImageShopAlgorithmsInterface {
 				} else {
 					pixelsBlur[i][j] = averagePixels(pixels[i][j] , pixels[i-1][j-1] , pixels[i-1][j] , pixels[i-1][j+1] 
 						, pixels[i][j-1] , pixels[i][j+1] , pixels[i+1][j-1] , pixels[i+1][j] , pixels[i+1][j+1]);
-
 				}
 
 			}
