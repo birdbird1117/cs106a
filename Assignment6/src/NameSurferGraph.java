@@ -38,8 +38,8 @@ public class NameSurferGraph extends GCanvas implements NameSurferConstants, Com
 		for(int i = 0; i<10; i++) {
 			Integer entryRankPre = entry.getRank(i);
 			Integer entryRankPost = entry.getRank(i+1);
-			double entryRankPreY = (double)(entryRankPre)/1000*windowHeight;
-			double entryRankPostY = (double)(entryRankPost)/1000*windowHeight;
+			double entryRankPreY = (double)(entryRankPre)/1000*(windowHeight - 2*GRAPH_MARGIN_SIZE)+GRAPH_MARGIN_SIZE;
+			double entryRankPostY = (double)(entryRankPost)/1000*(windowHeight - 2*GRAPH_MARGIN_SIZE)+GRAPH_MARGIN_SIZE;
 			System.out.println(entryRankPreY );
 			GLine aLine = new GLine(step*i, entryRankPreY, step*(i+1), entryRankPostY);
 			add(aLine);
@@ -54,6 +54,9 @@ public class NameSurferGraph extends GCanvas implements NameSurferConstants, Com
 		// TODO: implement this method
 		removeAll();
 		initGrid();
+		for (NameSurferEntry e : nameList) {
+			drawOneEntry(e);
+		}
 	}
 
 	private void initGrid() {
