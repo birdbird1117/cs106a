@@ -10,11 +10,13 @@ public class NameSurferGraph extends GCanvas
 
 	private double windowWidth;
 	private double windowHeight;
+	private double step;
+	private ArrayList<NameSurferEntry> nameList;
 	// TODO: comment this constructor
 	public NameSurferGraph() {
 		addComponentListener(this);
 		// TODO: implement the rest of the constructor
-
+		nameList  = new ArrayList<>();
 		
 	}
 	
@@ -25,9 +27,26 @@ public class NameSurferGraph extends GCanvas
 	
 	// TODO: comment this method
 	public void addEntry(NameSurferEntry entry) {
-		// TODO: implement this method
+		nameList.add(entry);
+		drawOneEntry(entry);
 	}
 	
+	private void drawOneEntry(NameSurferEntry entry) {
+		String entryName = entry.getName();
+		System.out.println(entryName);
+		for(int i = 0; i<10; i++) {
+			Integer entryRankPre = entry.getRank(i);
+			Integer entryRankPost = entry.getRank(i+1);
+			double entryRankPreY = (double)(entryRankPre)/1000*windowHeight;
+			double entryRankPostY = (double)(entryRankPost)/1000*windowHeight;
+			System.out.println(entryRankPreY );
+			GLine aLine = new GLine(step*i, entryRankPreY, step*(i+1), entryRankPostY);
+			add(aLine);
+			GLabel aLabel = new GLabel(entryName+" "+entryRankPre.toString(), step*i, entryRankPreY);
+			add(aLabel);
+		}
+	}
+
 	// TODO: comment this method
 	// It seems like that when window pop up, it triggers componentResized()
 	public void update() {
@@ -39,7 +58,7 @@ public class NameSurferGraph extends GCanvas
 	private void initGrid() {
 		windowWidth = getWidth();
 		windowHeight = getHeight();
-		double step = windowWidth/11;
+		step = windowWidth/11;
 		for(int i = 0; i<11; i++) {
 			GLine aGrid = new GLine(step*i, 0, step*i, windowHeight);
 			add(aGrid);
