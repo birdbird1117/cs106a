@@ -24,7 +24,9 @@ public class NameSurferDatabase implements NameSurferConstants {
 	// TODO: comment this method
 	public NameSurferEntry findEntry(String name) {
 		// TODO: implement this method
-		String oneNameData = nameDataBase.get(name);
+		String nameLowerCase = name.toLowerCase();
+		String nameWithCapital = nameLowerCase.substring(0,1).toUpperCase() + nameLowerCase.substring(1);
+		String oneNameData = nameDataBase.get(nameWithCapital);
 		NameSurferEntry oneNameSurferEntry = new NameSurferEntry(oneNameData);		
 		return oneNameSurferEntry;	// remove this line
 	}
