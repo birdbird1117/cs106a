@@ -1,3 +1,4 @@
+
 // TODO: comment this file
 
 import java.util.*;
@@ -7,13 +8,14 @@ public class NameSurferEntry implements NameSurferConstants {
 	//private HashMap<String, Integer[]> nameData = new HashMap<>();
 	private String name;
 	private Integer[] nameRank = new Integer[11];
+
 	// TODO: comment this constructor
 	public NameSurferEntry(String dataLine) {
 		String[] dataLineParts = dataLine.split(" ");
 		name = dataLineParts[0];
-		for(int i = 1; i <12; i++) {
+		for (int i = 1; i < 12; i++) {
 			//System.out.println(dataLineParts[i]);
-			nameRank[i-1] = Integer.valueOf(dataLineParts[i]);
+			nameRank[i - 1] = Integer.valueOf(dataLineParts[i]);
 		}
 	}
 
@@ -21,21 +23,21 @@ public class NameSurferEntry implements NameSurferConstants {
 	public String getName() {
 		// TODO: implement this method
 
-		return name;	
+		return name;
 	}
 
 	// TODO: comment this method
 	public int getRank(int decadesSince1900) {
 		// TODO: implement this method
 
-		return nameRank[decadesSince1900];	
+		return nameRank[decadesSince1900];
 	}
 
 	// TODO: comment this method
 	public String toString() {
 		// TODO: implement this method
 
-		return name+" "+Arrays.toString(nameRank);	// remove this line
+		return name + " " + Arrays.toString(nameRank); // remove this line
 	}
 
 	public static void main(String[] args) {
@@ -46,4 +48,3 @@ public class NameSurferEntry implements NameSurferConstants {
 		System.out.println(entryTest.toString());
 	}
 }
-

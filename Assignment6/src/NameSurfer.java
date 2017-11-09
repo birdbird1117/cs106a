@@ -1,3 +1,4 @@
+
 // TODO: comment this file
 
 import acm.program.*;
@@ -12,9 +13,9 @@ public class NameSurfer extends Program implements NameSurferConstants {
 	private NameSurferDatabase nameDataBase;
 
 	public void init() {
-	//	canvas = new MyCanvas();
-	//	add(canvas);
-	    JLabel nameLabel = new JLabel("Name: ");
+		//	canvas = new MyCanvas();
+		//	add(canvas);
+		JLabel nameLabel = new JLabel("Name: ");
 		add(nameLabel, NORTH);
 		nameField = new JTextField(TEXT_FIELD_WIDTH);
 		add(nameField, NORTH);
@@ -29,17 +30,17 @@ public class NameSurfer extends Program implements NameSurferConstants {
 		add(graph);
 		// it is so wired, here the path is ../ , not ./ like in the NameSurferDB main()
 		nameDataBase = new NameSurferDatabase("../res/names-data.txt");
-		
+
 	}
 
 	public void actionPerformed(ActionEvent event) {
 		println(event.getActionCommand());
-		if(event.getActionCommand().equals("Graph")) {
-		println("graphButton");	
-		println(nameField.getText());
-		NameSurferEntry entry = nameDataBase.findEntry(nameField.getText());
-		println(entry.toString());
-		graph.addEntry(entry);
+		if (event.getActionCommand().equals("Graph")) {
+			println("graphButton");
+			println(nameField.getText());
+			NameSurferEntry entry = nameDataBase.findEntry(nameField.getText());
+			println(entry.toString());
+			graph.addEntry(entry);
 		}
 	}
 
