@@ -6,7 +6,10 @@ import javax.swing.*;
 
 public class NameSurfer extends Program implements NameSurferConstants {
 
+	//private myCanvas canvas;
 	public void init() {
+	//	canvas = new MyCanvas();
+	//	add(canvas);
 	    JLabel nameLabel = new JLabel("Name: ");
 		add(nameLabel, NORTH);
 		JTextField nameField = new JTextField(TEXT_FIELD_WIDTH);
@@ -18,6 +21,8 @@ public class NameSurfer extends Program implements NameSurferConstants {
 		addActionListeners();
 		nameField.addActionListener(this);
 		nameField.setActionCommand("Graph");
+		NameSurferGraph grids = new NameSurferGraph();
+		add(grids);
 	}
 
 	public void actionPerformed(ActionEvent event) {
