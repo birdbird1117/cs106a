@@ -24,6 +24,8 @@ public class NameSurferGraph extends GCanvas implements NameSurferConstants, Com
 	// TODO: comment this method
 	public void clear() {
 		// TODO: implement this method
+		nameList.clear();
+		update();
 	}
 
 	// TODO: comment this method
@@ -34,18 +36,55 @@ public class NameSurferGraph extends GCanvas implements NameSurferConstants, Com
 
 	private void drawOneEntry(NameSurferEntry entry) {
 		String entryName = entry.getName();
+		Color color = selectColor(nameList.indexOf(entry));
 		System.out.println(entryName);
-		for(int i = 0; i<10; i++) {
-			Integer entryRankPre = entry.getRank(i);
-			Integer entryRankPost = entry.getRank(i+1);
-			double entryRankPreY = (double)(entryRankPre)/1000*(windowHeight - 2*GRAPH_MARGIN_SIZE)+GRAPH_MARGIN_SIZE;
-			double entryRankPostY = (double)(entryRankPost)/1000*(windowHeight - 2*GRAPH_MARGIN_SIZE)+GRAPH_MARGIN_SIZE;
-			System.out.println(entryRankPreY );
-			GLine aLine = new GLine(step*i, entryRankPreY, step*(i+1), entryRankPostY);
+		for (int i = 0; i < 10; i++) {
+			Integer entryRankPre = entry.getRank(i) - 1;
+			Integer entryRankPost = entry.getRank(i + 1) - 1;
+			if (entryRankPre == -1) {
+				entryRankPre = 1000;
+			}
+			if (entryRankPost == -1) {
+				entryRankPost = 1000;
+			}
+			double entryRankPreY = (double) (entryRankPre) / 1000 * (windowHeight - 2 * GRAPH_MARGIN_SIZE)
+					+ GRAPH_MARGIN_SIZE;
+			double entryRankPostY = (double) (entryRankPost) / 1000 * (windowHeight - 2 * GRAPH_MARGIN_SIZE)
+					+ GRAPH_MARGIN_SIZE;
+			System.out.println(entryRankPreY);
+			GLine aLine = new GLine(step * i, entryRankPreY, step * (i + 1), entryRankPostY);
+			aLine.setColor(color);
 			add(aLine);
-			GLabel aLabel = new GLabel(entryName+" "+entryRankPre.toString(), step*i, entryRankPreY);
-			add(aLabel);
+			if (entryRankPre != 1000) {
+				entryRankPre++;
+				GLabel aLabel = new GLabel(entryName + " " + entryRankPre.toString(), step * i, entryRankPreY);
+				aLabel.setColor(color);
+				add(aLabel);
+
+			} else {
+				GLabel aLabel = new GLabel(entryName + " " + "*", step * i, entryRankPreY);
+				aLabel.setColor(color);
+				add(aLabel);
+			}
 		}
+	}
+
+	public static final Color BLACK = new Color(0, 0, 0);
+	public static final Color RED = new Color(255, 0, 0);
+	public static final Color BLUE = new Color(0, 0, 255);
+	public static final Color MAGENTA = new Color(255, 0, 255);
+
+	private Color selectColor(int i) {
+		if (i % 4 == 0) {
+			return BLACK;
+		} else if (i % 4 == 1) {
+			return RED;
+		} else if (i % 4 == 2) {
+			return BLUE;
+		} else if (i % 4 == 3) {
+			return MAGENTA;
+		}
+		return BLACK;
 	}
 
 	// TODO: comment this method

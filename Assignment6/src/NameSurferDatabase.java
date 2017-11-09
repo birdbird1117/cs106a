@@ -28,9 +28,15 @@ public class NameSurferDatabase implements NameSurferConstants {
 		// TODO: implement this method
 		String nameLowerCase = name.toLowerCase();
 		String nameWithCapital = nameLowerCase.substring(0, 1).toUpperCase() + nameLowerCase.substring(1);
-		String oneNameData = nameDataBase.get(nameWithCapital);
-		NameSurferEntry oneNameSurferEntry = new NameSurferEntry(oneNameData);
-		return oneNameSurferEntry; // remove this line
+		String oneNameData;
+		if (nameDataBase.get(nameWithCapital) != null) {
+			oneNameData = nameDataBase.get(nameWithCapital);
+			NameSurferEntry oneNameSurferEntry = new NameSurferEntry(oneNameData);
+			return oneNameSurferEntry; // remove this line
+
+		} else {
+			return null;
+		}
 	}
 
 	public static void main(String[] args) {
