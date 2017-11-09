@@ -66,6 +66,7 @@ public class NameSurferGraph extends GCanvas implements NameSurferConstants, Com
 				aLabel.setColor(color);
 				add(aLabel);
 			}
+			// FIXME, last label not shown
 		}
 	}
 
